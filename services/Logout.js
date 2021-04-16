@@ -11,6 +11,6 @@ router.get("/logout", function(req, res, next){
         }
             return res.send({success: true, message: 'UserSession isDeleted to true'});
     });
-}
+});
 
 module.exports = router;
