@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 var multer  = require('multer');
 const path = require("path");
 const User = require('./models/User');
+const compression = require('compression');
 const UserSession = require('./models/UserSession');
 const signIn = require('./routes/Signin');
 const signUp = require('./routes/Signup');
@@ -20,6 +21,7 @@ const env_prod =require('./env_prod.json');
 const env_local =require('./env.json');
 const isCI = require('is-ci');
 var fs = require('fs');
+require('dotenv').config();
 let url = "";
 
 if(process.env.ENV === "dev"){
@@ -57,8 +59,7 @@ if(process.env.ENV === "dev"){
         });
 }else{
     console.log("localhost");
-    url = `mongodb://localhost:27017/shop-supplier`;
-    //url = `mongodb+srv://${env_config.username}:${env_config.pswd}@${env_config.mongoDBHost}/postidal`;
+    url = `mongodb://localhost:27017/shop-supplier`;    
     mongoose.connect(url,{useNewUrlParser:true,useUnifiedTopology: true,useCreateIndex:true}).then(async (db) => {
         console.log('Connected to MongoDB server',url);
     })
@@ -92,10 +93,8 @@ app.use('/adverts',findAd);
 
 
 
-// const port_redis=process.env.REDIST_PORT || 6379;
-const port = process.env.PORT || 8089;
 
-// const redis_client=redis.createClient(port_redis);
+const port = process.env.PORT || 8080;
 
 app.listen(port, () => {
     console.log(`listening on port ${port}`);
