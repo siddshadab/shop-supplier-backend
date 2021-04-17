@@ -83,13 +83,13 @@ app.use(methodOverride('_method'));
 
 
 
-app.use('/account', signIn);
-app.use('/account', signUp);
-app.use('/account', logOut);
-app.use('/account', verify);
-app.use('/post',adPost);
-app.use('/adverts', findAds);
-app.use('/adverts',findAd);
+app.use('/api/v1/signin', signIn);
+app.use('/api/v1/signup', signUp);
+app.use('/api/v1/logout', logOut);
+app.use('/api/v1/verify', verify);
+app.use('/api/v1/adpost',adPost);
+app.use('/api/v1/ads', findAds);
+app.use('/api/v1//ad/:id',findAd);
 
 
 

@@ -2,11 +2,10 @@ const express = require('express');
 const router = express.Router();
 const UserSession = require('../models/UserSession');
 
-router.get("/verify", function(req, res, next){
 
+exports.getVerify = async function(req,res){
     const {query} = req;
     const {token} = query;
-
     UserSession.find({
         _id: token,
         isDeleted: false
@@ -30,9 +29,9 @@ router.get("/verify", function(req, res, next){
             });
         }
     });
+}
 
-});
 
-module.exports = router;
+
 
 

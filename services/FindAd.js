@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 const AdPost = require('../models/AdPost');
 
-router.get('/ad/:id', function(req, res, next){
-    
+
+exports.getAdPostOnId = async function(req,res){
+
     AdPost.findOne({
         _id: req.params.id
     })
@@ -17,6 +18,6 @@ router.get('/ad/:id', function(req, res, next){
             res.json(ad);
         }
     })
-})
+}
 
-module.exports = router;
+

@@ -3,31 +3,17 @@ const router = express.Router();
 const User = require('../models/User');
 const UserSession = require('../models/UserSession');
 
- 
-// router.get('/signin', function(req, res){
-//     res.send("This is signin page this is wonderful");
-// })
 
-router.post('/signin', function(req, res, next){
-    // const { body } = req;
-
-    // const {
-    //     password
-    // } = body;
-
-    // let {
-    //     email
-    // } = body;
-
+exports.postSignIn = async function(req,res){
 
     if(!req.body.email){
-        return res.send({
+         res.send({
             success: false,
             message: "Error: email field can't be blank"
         });
     }
     if(!req.body.password){
-        return res.send({
+         res.send({
             success: false,
             message: "Error: password field can't be blank"
         });
@@ -40,7 +26,7 @@ router.post('/signin', function(req, res, next){
     },(err, users)=>{
         // console.log(users);
         if(err){
-            return res.send({
+             res.send({
                 success: false,
                 message: 'Error: Server error'
             });
@@ -48,7 +34,7 @@ router.post('/signin', function(req, res, next){
         if(users.length != 1){
             // console.log(users);
             // console.log(users.length);
-            return res.send({
+             res.send({
                 success: false,
                 message: 'Error: Invalid'
             });
@@ -56,7 +42,7 @@ router.post('/signin', function(req, res, next){
 
         const user = users[0];
         if(!user.validPassword(req.body.password)){
-            return res.send({
+             res.send({
                 success: false,
                 message: 'Error: Invalid Password'
             });
@@ -68,13 +54,13 @@ router.post('/signin', function(req, res, next){
         userSession.userId = user._id;
         userSession.save((err, doc) => {
             if(err){
-                return res.send({
+                 res.send({
                     success: false,
                     message: 'Error: Server error'
                 });
             }
             else if(doc){
-                return res.send({
+                 res.send({
                     success: true,
                     message: 'Valid sign in',
                     token: doc._id
@@ -83,6 +69,5 @@ router.post('/signin', function(req, res, next){
         });
 
     });
-});
+}
 
-module.exports = router;

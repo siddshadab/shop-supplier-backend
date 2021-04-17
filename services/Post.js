@@ -12,18 +12,11 @@ const storage = multer.diskStorage({
     }
 })
 
-// const fileFilter = (req, file, cb) => {
-//     if(file.mimetype === 'image/jpeg' || file.mimetype === 'image/png'){
-//         cb(null, true);
-//     }
-//     else{
-//         cb(null, false);
-//     }
-// }
-
 var upload = multer({storage : storage}); // limits:{fileSize: 1024 * 1024 * 5}
 
-router.post('/adpost', upload.single('productImage') ,function(req, res, next){
+
+exports.postAd = async function(req,res){
+    upload.single('productImage')
     console.log(req.file);
     console.log(req.body);
 
@@ -110,6 +103,7 @@ router.post('/adpost', upload.single('productImage') ,function(req, res, next){
             });
         }
     });
-});
+}
 
-module.exports = router;
+
+

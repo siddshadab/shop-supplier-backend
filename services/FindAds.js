@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const AdPost = require('../models/AdPost');
 
-router.get('/ads', function(req, res, next){
+exports.getAd = async function(req,res){
     AdPost.find({}, function(err, ads){
         if(err){
             res.send('Error has accured');
@@ -11,6 +11,5 @@ router.get('/ads', function(req, res, next){
             res.json(ads);
         }
     });
-});
+}
 
-module.exports = router;

@@ -1,16 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const AdPost = require('../models/AdPost');
+const services = require('../services/FindAds');
 
-router.get('/ads', function(req, res, next){
-    AdPost.find({}, function(err, ads){
-        if(err){
-            res.send('Error has accured');
-        }
-        else{
-            res.json(ads);
-        }
-    });
-});
+router.route('/')
+    .get(services.getAd)
+
 
 module.exports = router;
