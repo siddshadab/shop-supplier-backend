@@ -1,6 +1,7 @@
 {
-  "name": "market-app",
-  "version": "0.1.0",
+  "name": "shopsupplier",
+  "version": "1.0.0",
+  "description": "Shop Supplier(Dream Startup)",
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
@@ -21,12 +22,26 @@
     "react-dom": "^16.4.2",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
-    "react-select": "^2.0.0"
+    "react-select": "^2.0.0",
+    "winston": "^3.3.3"
   },
   "scripts": {
     "start": "nodemon ./app.js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/siddshadab/shop-supplier-backend.git"
+  },
+  "keywords": [
+    "Shadab"
+  ],
+  "author": "Shadab siddiqui <siddShadab7@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/siddshadab/shop-supplier-backend.git"
+  },
+  "homepage": "https://github.com/siddshadab/shop-supplier-backend.git"
 }

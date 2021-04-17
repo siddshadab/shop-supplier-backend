@@ -9,8 +9,8 @@ exports.postSignUp = async function(req,res){
     console.log('body', body);
 
     const {
-        firstName,
-        lastName,
+        fname,
+        lname,
         password
     } = body;
 
@@ -18,13 +18,13 @@ exports.postSignUp = async function(req,res){
         email
     } = body;
 
-    if(!firstName){
+    if(!fname){
         res.send({
             success: false,
             message: "Error: first name can't be blank"
         });
     }
-    if(!lastName){
+    if(!lname){
         res.send({
             success: false,
             message: "Error: last name can't be blank"
@@ -68,8 +68,8 @@ exports.postSignUp = async function(req,res){
 
         const newUser = new User();
         newUser.email = email;
-        newUser.firstName = firstName;
-        newUser.lastName = lastName;
+        newUser.firstName = fname;
+        newUser.lastName = lname;
         newUser.password = newUser.generateHash(password);
         newUser.save((err, user) => {
             if(err){

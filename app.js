@@ -22,21 +22,17 @@ const env_local =require('./env.json');
 const isCI = require('is-ci');
 var fs = require('fs');
 require('dotenv').config();
-let url = "";
+var errorHandler = require("./utils/errorHandler.js");
+var config = require("./config");
+var logger = require("./utils/logger.js");
 
-if(process.env.ENV === "dev"){
-    var env_config = env_dev;
-}else if(process.env.ENV === "prod"){
-    var env_config = env_prod;
-}else{
-    var env_config =env_local;
-}
+let url = "";
 
 
 //Check env variable
 if(process.env.ENV === "dev"){
     console.log("Development :",process.env.ENV);
-    url = `mongodb+srv://${env_config.username}:${env_config.pswd}@${env_config.mongoDBHost}/shop-supplier`;
+    url = `mongodb+srv://${config.DB.username}:${config.DB.pswd}@${config.DB.mongoDBHost}/shop-supplier`;
 
     mongoose.connect(url,{useNewUrlParser:true,useUnifiedTopology: true,useCreateIndex:true}).then(async (db) => {
         console.log('Connected to MongoDB server',url);
@@ -47,7 +43,7 @@ if(process.env.ENV === "dev"){
     
 }else if(process.env.ENV === "prod"){
     console.log("Production :",process.env.ENV);
-    url = `mongodb://${env_config.username}:${env_config.pswd}@${env_config.mongoDBHost}/shop-supplier?ssl=true&replicaSet=rs0&readPreference=secondaryPreferred`;
+    url = `mongodb://${config.DB.username}:${config.DB.pswd}@${config.DB.mongoDBHost}/shop-supplier?ssl=true&replicaSet=rs0&readPreference=secondaryPreferred`;
 
     var ca = [fs.readFileSync("rds-combined-ca-bundle.pem")];
 
@@ -71,7 +67,7 @@ if(process.env.ENV === "dev"){
 
 app.use(compression());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(cors());
 // app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -94,8 +90,23 @@ app.use('/api/v1//ad/:id',findAd);
 
 
 
-const port = process.env.PORT || 8080;
 
-app.listen(port, () => {
-    console.log(`listening on port ${port}`);
+app.listen(config.APP.PORT, () => {
+    console.log(`listening on port ${config.APP.PORT}`);
+});
+
+// // Initialize Global Error Handlers
+app.use(errorHandler);
+process.on('unhandledRejection', (reason, promise) => {
+  throw reason;
+});
+
+process.on('uncaughtException', error => {
+  logger.error(`Uncaught Exception: ${500} - ${error.message}, Stack: ${error.stack}`);
+  // process.exit(1);
+});
+
+process.on('SIGINT', () => {
+  logger.info(' Alright! Bye bye! ShutDownHooks');
+  process.exit();
 });

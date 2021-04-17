@@ -6,6 +6,7 @@ const UserSession = require('../models/UserSession');
 
 exports.postSignIn = async function(req,res){
 
+    console.log(req.body)
     if(!req.body.email){
          res.send({
             success: false,
@@ -63,7 +64,8 @@ exports.postSignIn = async function(req,res){
                  res.send({
                     success: true,
                     message: 'Valid sign in',
-                    token: doc._id
+                    token: doc._id,
+                    userId: doc._id
                 });
             }
         });
