@@ -3,22 +3,14 @@ const router = express.Router();
 const AdPost = require('../models/AdPost');
 var multer  = require('multer');
 
-const storage = multer.diskStorage({
-    destination: function(req, file, cb){
-        cb(null, './uploads/');
-    },
-    filename: function(req, file, cb){
-        cb(null, new Date().getMilliseconds() + file.originalname)
-    }
-})
-
-var upload = multer({storage : storage}); // limits:{fileSize: 1024 * 1024 * 5}
+ // limits:{fileSize: 1024 * 1024 * 5}
 
 
 exports.postAd = async function(req,res){
-    upload.single('productImage')
-    console.log(req.file);
+
+console.log(req.file);
     console.log(req.body);
+
 
     if(!req.body.title){
         return res.send({
